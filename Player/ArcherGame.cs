@@ -1,11 +1,11 @@
-﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using ArcherEngine.Core;
 
-namespace ArcherEngine.PlayerApp;
+namespace ArcherEngine.Player;
 
-public class ArcherGame : Game
+class ArcherGame : Game
 {
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;

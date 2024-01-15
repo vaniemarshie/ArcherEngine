@@ -1,3 +1,3 @@
 ﻿
-using var game = new ArcherEngine.PlayerApp.ArcherGame();
+using var game = new ArcherEngine.Player.ArcherGame();
 game.Run();
