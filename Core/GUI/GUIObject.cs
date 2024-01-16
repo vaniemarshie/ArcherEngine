@@ -17,8 +17,8 @@ public class GUIObjectState
 	/// </summary>
 	public int TimeElapsed = 0;
 
-	public Dictionary<string, bool> BoolVariables = new Dictionary<string, bool>();
-	public Dictionary<string, int> IntVariables = new Dictionary<string, int>();
+	public Dictionary<string, bool> BoolVariables = new();
+	public Dictionary<string, int> IntVariables = new();
 }
 
 public class GUIObject
@@ -32,7 +32,10 @@ public class GUIObject
 	public IGUIObjectProperty<bool> Hidden = new GUIStaticProperty<bool>() { Value = false };
 
 	[ContentSerializer(Optional = true)]
-	public IGUIObjectProperty<Vector2> Position = new GUIStaticProperty<Vector2>() { Value = Vector2.Zero };
+	public Vector2 Position = Vector2.Zero;
+
+	[ContentSerializer(Optional = true)]
+	public IGUIObjectProperty<Vector2> PositionOffset = new GUIStaticProperty<Vector2>() { Value = Vector2.Zero };
 
 	public virtual void LoadObjectResource(ContentManager content) {}
 	public virtual void DrawObject(SpriteBatch spriteBatch) {}

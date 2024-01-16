@@ -3,9 +3,7 @@
 	<Asset Type="GUI:Scene">
 		<Objects>
 			<Item Type="GUI:TextObject">
-				<Position Type="GUI:GUIStaticProperty[Framework:Vector2]">
-					<Value>10.0 10.0</Value>
-				</Position>
+				<Position>10.0 10.0</Position>
 				<Resource>Fonts/small</Resource>
 				<Text Type="GUI:GUIStaticProperty[string]">
 					<Value>Hello World!</Value>

@@ -39,7 +39,7 @@ public class SpriteObject : GUIObject
 	{
 		spriteBatch.Draw(
 			texture: LoadedResource,
-			position: Position.GetValue(),
+			position: Position + PositionOffset.GetValue(),
 			sourceRectangle: SrcRect.GetValue(),
 			color: SpriteColor.GetValue(),
 			rotation: Rotation.GetValue(),
@@ -68,7 +68,7 @@ public class TextObject : SpriteObject
 		spriteBatch.DrawString(
 			spriteFont: LoadedResource,
 			text: Text.GetValue(),
-			position: Position.GetValue(),
+			position: Position + PositionOffset.GetValue(),
 			color: SpriteColor.GetValue(),
 			rotation: Rotation.GetValue(),
 			origin: Origin.GetValue(),
