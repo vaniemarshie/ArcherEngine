@@ -4,6 +4,4 @@ public struct ContentSettings
 {
 	public int InternalWidth;
 	public int InternalHeight;
-
-	public string StartingScene;
 }

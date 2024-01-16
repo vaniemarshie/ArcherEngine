@@ -3,6 +3,5 @@
 	<Asset Type="ArcherEngine.Core.ContentSettings">
 		<InternalWidth>640</InternalWidth>
 		<InternalHeight>360</InternalHeight>
-		<StartingScene>DebugScene0</StartingScene>
   	</Asset>
 </XnaContent>

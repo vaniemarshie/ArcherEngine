@@ -13,8 +13,6 @@ class ArcherGame : Game
 	private ContentSettings _settings;
 	private RenderTarget2D _renderTarget;
 
-	private GUIManager _guiManager = null;
-
     public ArcherGame()
     {
         _graphics = new GraphicsDeviceManager(this);
@@ -31,8 +29,6 @@ class ArcherGame : Game
 
 		// TODO: Replace this with loading an actual config file.
 		ChangeResolution(2);
-
-		_guiManager = new GUIManager(_settings.StartingScene, Content);
     }
 
     protected override void Update(GameTime gameTime)
@@ -51,7 +47,7 @@ class ArcherGame : Game
 		GraphicsDevice.Clear(Color.CornflowerBlue);
 		_spriteBatch.Begin(samplerState: SamplerState.PointClamp);
 
-		_guiManager.DrawScene(_spriteBatch);
+		// TODO: Sprite batching lol
 
 		_spriteBatch.End();
 		GraphicsDevice.SetRenderTarget(null);

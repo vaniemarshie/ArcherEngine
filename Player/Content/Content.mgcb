@@ -26,8 +26,3 @@
 /processorParam:TextureFormat=Compressed
 /build:Fonts/small.spritefont;Fonts/small
 
-#begin Scenes/DebugScene0.xml
-/importer:XmlImporter
-/processor:PassThroughProcessor
-/build:Scenes/DebugScene0.xml;Scenes/DebugScene0
-
