@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<XnaContent xmlns:GUI="ArcherEngine.Core.GUI" xmlns:Framework="Microsoft.Xna.Framework">
+	<Asset Type="GUI:Scene">
+		<Objects>
+			<Item Type="GUI:TextObject">
+				<Position Type="GUI:GUIStaticProperty[Framework:Vector2]">
+					<Value>10.0 10.0</Value>
+				</Position>
+				<Resource>Fonts/small</Resource>
+				<Text Type="GUI:GUIStaticProperty[string]">
+					<Value>Hello World!</Value>
+				</Text>
+			</Item>
+		</Objects>
+	</Asset>
+</XnaContent>

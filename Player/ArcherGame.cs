@@ -1,4 +1,4 @@
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using ArcherEngine.Core;
@@ -12,6 +12,8 @@ class ArcherGame : Game
 
 	private ContentSettings _settings;
 	private RenderTarget2D _renderTarget;
+
+	private GUIManager _guiManager = null;
 
     public ArcherGame()
     {
@@ -29,6 +31,8 @@ class ArcherGame : Game
 
 		// TODO: Replace this with loading an actual config file.
 		ChangeResolution(2);
+
+		_guiManager = new GUIManager(_settings.StartingScene, Content);
     }
 
     protected override void Update(GameTime gameTime)
@@ -47,7 +51,7 @@ class ArcherGame : Game
 		GraphicsDevice.Clear(Color.CornflowerBlue);
 		_spriteBatch.Begin(samplerState: SamplerState.PointClamp);
 
-		// TODO: Do sprite batching here lol
+		_guiManager.DrawScene(_spriteBatch);
 
 		_spriteBatch.End();
 		GraphicsDevice.SetRenderTarget(null);
