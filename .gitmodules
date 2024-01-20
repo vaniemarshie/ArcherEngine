@@ -1,0 +1,4 @@
+[submodule "FixPointCS"]
+	path = FixPointCS
+	url = https://github.com/XMunkki/FixPointCS.git
+	branch = c701f57c3cfe6478d1f6fd7578ae040c59386b3d
