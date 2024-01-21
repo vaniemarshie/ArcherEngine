@@ -2,6 +2,6 @@
 
 public static class Constants
 {
-	public const int InternalWidth = 640;
-	public const int InternalHeight = 320;
+	public const int InternalWidth = 320;
+	public const int InternalHeight = 180;
 }
