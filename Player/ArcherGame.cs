@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using ArcherEngine.Core;
 
 namespace ArcherEngine.Player;
@@ -26,7 +25,7 @@ class ArcherGame : Game
         _renderTarget = new RenderTarget2D(GraphicsDevice, Constants.InternalWidth, Constants.InternalHeight);
 
 		// TODO: Replace this with loading an actual config file.
-		ChangeResolution(2);
+		ChangeResolution(4);
     }
 
     protected override void Update(GameTime gameTime)
