@@ -1,7 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<XnaContent xmlns:ns="Microsoft.Xna.Framework">
-	<Asset Type="ArcherEngine.Core.ContentSettings">
-		<InternalWidth>640</InternalWidth>
-		<InternalHeight>360</InternalHeight>
-  	</Asset>
-</XnaContent>

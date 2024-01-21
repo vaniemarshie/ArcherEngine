@@ -10,7 +10,6 @@ class ArcherGame : Game
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
 
-	private ContentSettings _settings;
 	private RenderTarget2D _renderTarget;
 
     public ArcherGame()
@@ -24,8 +23,7 @@ class ArcherGame : Game
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-		_settings = Content.Load<ContentSettings>("contentSettings");
-        _renderTarget = new RenderTarget2D(GraphicsDevice, _settings.InternalWidth, _settings.InternalHeight);
+        _renderTarget = new RenderTarget2D(GraphicsDevice, Constants.InternalWidth, Constants.InternalHeight);
 
 		// TODO: Replace this with loading an actual config file.
 		ChangeResolution(2);
@@ -33,9 +31,6 @@ class ArcherGame : Game
 
     protected override void Update(GameTime gameTime)
     {
-        if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-            Exit();
-
         // TODO: Add your update logic here
 
         base.Update(gameTime);
@@ -62,8 +57,8 @@ class ArcherGame : Game
 
 	public void ChangeResolution(int Multiplier)
 	{
-		_graphics.PreferredBackBufferWidth = _settings.InternalWidth * Multiplier;
-		_graphics.PreferredBackBufferHeight = _settings.InternalHeight * Multiplier;
+		_graphics.PreferredBackBufferWidth = Constants.InternalWidth * Multiplier;
+		_graphics.PreferredBackBufferHeight = Constants.InternalHeight * Multiplier;
 		_graphics.ApplyChanges();
 
 		System.Console.WriteLine("New resolution: {0} x {1}", _graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight);
