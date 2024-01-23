@@ -4,30 +4,30 @@ using Microsoft.Xna.Framework.Input;
 namespace ArcherEngine.Core;
 
 [Flags]
-public enum SoulInput: UInt16
+public enum SoulInput
 {
-	Up 		= 0b100000000,
-	Down	= 0b010000000,
-	Left	= 0b001000000,
-	Right	= 0b000100000,
+	Light	= 1 << 0,
+	Heavy	= 1 << 1,
+	Shot	= 1 << 2,
+	Dash	= 1 << 3,
+	Guard	= 1 << 4,
 
-	SOCDLeftRight = 0b001100000,
+	Up = 1 << 5,
+	Down = 1 << 6,
+	Left = 1 << 7,
+	Right = 1 << 8,
 
-	Light	= 0b000010000,
-	Heavy	= 0b000001000,
-	Shot	= 0b000000100,
-	Dash	= 0b000000010,
-	Guard	= 0b000000001
+	SOCDLeftRight = Left | Right,
+
+	ButtonMask = Light | Heavy | Shot | Dash | Guard
 }
 
 public static class SoulInputExtensions
 {
-	public static SoulInput SOCDClean(this ref SoulInput input)
+	public static void SOCDClean(this ref SoulInput input)
 	{
 		if((input & SoulInput.Up) != 0) input ^= SoulInput.Down;
 		if((input & SoulInput.SOCDLeftRight) == SoulInput.SOCDLeftRight) input ^= SoulInput.SOCDLeftRight;
-
-		return input;
 	}
 }
 
@@ -37,7 +37,7 @@ public static class SoulInputExtensions
 /// </summary>
 public interface ISoul
 {
-	SoulInput GetInput();
+	SoulInput GetInput(); // TODO: Add parameters to give data to CPU, netplay, and replay input types.
 }
 
 public struct ControllerConfig
