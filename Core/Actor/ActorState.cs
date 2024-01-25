@@ -1,5 +1,6 @@
 using FixMath;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 
 namespace ArcherEngine.Core;
 
@@ -10,28 +11,49 @@ public struct HitDef
 
 public struct ActorStateFrame
 {
+	[ContentSerializer(Optional = true)]
 	public F32Vec2? SetVelocity;
+	[ContentSerializer(Optional = true)]
 	public F32Vec2? AddVelocity;
+	[ContentSerializer(Optional = true)]
 	public F32? SetTraction;
+	[ContentSerializer(Optional = true)]
 	public F32? SetGravity;
+	[ContentSerializer(Optional = true)]
+	public F32? SetMaxXVol;
 
+	[ContentSerializer(Optional = true)]
+	public bool? SetFlipped;
+
+	[ContentSerializer(Optional = true)]
 	public int? SetState;
+	[ContentSerializer(Optional = true)]
 	public StateCat[] SetStateCats;
 
+	[ContentSerializer(Optional = true)]
 	public int? SetSprite;
+	[ContentSerializer(Optional = true)]
+	public int? SetPalette;
+	[ContentSerializer(Optional = true)]
 	public Rectangle[] SetHurtboxes;
+	[ContentSerializer(Optional = true)]
 	public Rectangle[] SetHitboxes;
+	[ContentSerializer(Optional = true)]
 	public HitDef? SetHitDef;
 
+	[ContentSerializer(Optional = true)]
 	public bool? SetGrazing;
+	[ContentSerializer(Optional = true)]
 	public bool? SetInvulnerable;
+	[ContentSerializer(Optional = true)]
 	public bool? SetArmored;
-	public bool? SetTurnable;
 }
 
 [Flags]
 public enum ActorInputs
 {
+	Nothing = 0,
+
 	HoldButtons = 1 << 0,
 
 	HoldLight = HoldButtons << 0,
@@ -73,7 +95,8 @@ public struct ActorState
 	/// Dictionary for every state frame in this state, the key is used for the frame this is meant to play on.
 	/// </summary>
 	public Dictionary<int, ActorStateFrame> Frames;
-
-	public int Priority;
+	public int Length;
 	public ActorInputs Input;
+	public bool OnFloor;
+	public int Priority;
 }

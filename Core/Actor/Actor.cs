@@ -1,7 +1,9 @@
 using FixMath;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace ArcherEngine.Core;
+
 public struct StateCat
 {
 	public int Category;
@@ -22,6 +24,7 @@ public class Actor
 	public F32Vec2 Velocity;
 	public F32 Traction;
 	public F32 Gravity;
+	public F32 MaxXVol;
 
 	public bool IsFlipped;
 
@@ -31,6 +34,8 @@ public class Actor
 	public StateCat[] StateCats = Array.Empty<StateCat>();
 
 	public int Sprite;
+	public int DefaultPalette;
+	public int Palette;
 	public Rectangle[] Hurtboxes = Array.Empty<Rectangle>();
 	public Rectangle[] Hitboxes = Array.Empty<Rectangle>();
 	public HitDef HitDefinition;
@@ -39,15 +44,14 @@ public class Actor
 	public bool Grazing;
 	public bool Invulnerable;
 	public bool Armored;
-	public bool Turnable;
 
-	public Character Char;
-	public ISoul Soul;
+	readonly Character _char;
+	readonly ISoul _soul;
 
 	public Actor(Character character, ISoul soul)
 	{
-		Char = character;
-		Soul = soul;
+		_char = character;
+		_soul = soul;
 	}
 
 	/// <summary>
@@ -55,7 +59,7 @@ public class Actor
 	/// </summary>
 	void GetActorInput()
 	{
-		SoulInput input = Soul.GetInput();
+		SoulInput input = _soul.GetInput();
 		
 		// Increase the latest number, modulating by how large the buffer is.
 		InputBuffer.latest = (InputBuffer.latest + 1) % Constants.MaxInputBuffer;
@@ -82,6 +86,13 @@ public class Actor
 		return inputs;
 	}
 
+	public void SetState(int state)
+	{
+		State = state;
+		StateTime = 0;
+		HasHit = false;
+	}
+
 	public void Update()
 	{
 		GetActorInput();
@@ -93,34 +104,43 @@ public class Actor
 		foreach (StateCat cat in StateCats)
 		{
 			if (cat.OnlyOnHit && !HasHit) continue;
-			foreach (int stateIndex in Char.StateCats[cat.Category])
+			foreach (int stateIndex in _char.StateCats[cat.Category])
 			{
-				ActorState state = Char.States[stateIndex];
+				ActorState state = _char.States[stateIndex];
 
-				if ((state.Input & (IsFlipped ? input.Flip() : input)) != 0 && state.Priority > highestPriority)
+				if (((state.Input & (IsFlipped ? input.Flip() : input)) != 0 || state.Input == ActorInputs.Nothing) && state.Priority > highestPriority)
 				{
-					State = stateIndex;
-					StateTime = 0;
-					HasHit = false;
+					SetState(stateIndex);
 					highestPriority = state.Priority;
 				}
 			}
 		}
 
-		ActorState currentState = Char.States[State];
+		ActorState currentState = _char.States[State];
 
 		// Try and get the current frame of the state if it exists.
 		if (currentState.Frames.TryGetValue(StateTime, out ActorStateFrame frame))
 		{
+			// Do flipping first with velocity.
+			if (frame.SetFlipped.HasValue) IsFlipped = frame.SetFlipped.Value;
+
 			if (frame.SetVelocity.HasValue) Velocity = frame.SetVelocity.Value * (IsFlipped ? F32Vec2.FromInt(-1, 1) : F32Vec2.FromInt(1, 1));
 			if (frame.AddVelocity.HasValue) Velocity += frame.AddVelocity.Value * (IsFlipped ? F32Vec2.FromInt(-1, 1) : F32Vec2.FromInt(1, 1));
 			if (frame.SetTraction.HasValue) Traction = frame.SetTraction.Value;
 			if (frame.SetGravity.HasValue) Gravity = frame.SetGravity.Value;
 
-			if (frame.SetState.HasValue) State = frame.SetState.Value;
+			if (frame.SetState.HasValue) SetState(frame.SetState.Value);
 			if (frame.SetStateCats != null) StateCats = frame.SetStateCats;
 
 			if (frame.SetSprite.HasValue) Sprite = frame.SetSprite.Value;
+			if (frame.SetPalette.HasValue) 
+			{
+				Palette = frame.SetPalette.Value;
+				if (frame.SetPalette.Value == -1)
+				{
+					Palette = DefaultPalette;
+				}
+			}
 			if (frame.SetHurtboxes != null) Hurtboxes = frame.SetHurtboxes;
 			if (frame.SetHitboxes != null) Hitboxes = frame.SetHitboxes;
 			if (frame.SetHitDef.HasValue) HitDefinition = frame.SetHitDef.Value;
@@ -128,7 +148,33 @@ public class Actor
 			if (frame.SetGrazing.HasValue) Grazing = frame.SetGrazing.Value;
 			if (frame.SetInvulnerable.HasValue) Invulnerable = frame.SetInvulnerable.Value;
 			if (frame.SetArmored.HasValue) Armored = frame.SetArmored.Value;
-			if (frame.SetTurnable.HasValue) Turnable = frame.SetTurnable.Value;
 		}
+
+		StateTime = (StateTime + 1) % currentState.Length;
+
+		// TODO: I would put a colision call here, IF I HAD ONE
+	}
+
+	public void Draw(SpriteBatch spriteBatch, Effect paletteEffect)
+	{
+		// TODO: Camera things, probably
+
+		// Set palette settings
+		paletteEffect.Parameters["active"].SetValue(true);
+		paletteEffect.Parameters["palette"].SetValue((float)Palette / (float)Constants.PaletteCount);
+		paletteEffect.Parameters["PaletteTexture"].SetValue(_char.Sprites.LoadedPaletteResource);
+
+		// Draw!
+		spriteBatch.Draw(
+			texture: _char.Sprites.LoadedResource,
+			position: Position.ToFlooredV2(),
+			sourceRectangle: _char.Sprites.Sprites[Sprite],
+			color: Color.White,
+			rotation: 0f,
+			origin: Vector2.Zero,
+			scale: 0.0f,
+			effects: IsFlipped ? SpriteEffects.FlipHorizontally : SpriteEffects.None,
+			layerDepth: 1.0f
+		);
 	}
 }

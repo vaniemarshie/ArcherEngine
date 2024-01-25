@@ -10,6 +10,7 @@ class ArcherGame : Game
     private SpriteBatch _spriteBatch;
 
 	private RenderTarget2D _renderTarget;
+	private Effect _paletteEffect;
 
     public ArcherGame()
     {
@@ -23,6 +24,7 @@ class ArcherGame : Game
         _spriteBatch = new SpriteBatch(GraphicsDevice);
 
         _renderTarget = new RenderTarget2D(GraphicsDevice, Constants.InternalWidth, Constants.InternalHeight);
+		_paletteEffect = Content.Load<Effect>("Shaders/PaletteSwap.fx");
 
 		// TODO: Replace this with loading an actual config file.
 		ChangeResolution(4);
@@ -39,11 +41,13 @@ class ArcherGame : Game
     {
         GraphicsDevice.SetRenderTarget(_renderTarget);
 		GraphicsDevice.Clear(Color.CornflowerBlue);
-		_spriteBatch.Begin(samplerState: SamplerState.PointClamp);
+		
+		_spriteBatch.Begin(samplerState: SamplerState.PointClamp, effect: _paletteEffect);
 
-		// TODO: Sprite batching lol
+		// Draw here!
 
 		_spriteBatch.End();
+		
 		GraphicsDevice.SetRenderTarget(null);
 
 		// Render the render target here

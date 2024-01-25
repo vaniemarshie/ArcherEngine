@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<XnaContent xmlns:core="ArcherEngine.Core">
+	<Asset Type="core:Character">
+		<InternalName>LILA</InternalName>
+		<Name>Lilia</Name>
+		<Sprites>
+			<Item>
+				<Key>0</Key>
+				<Value>0 0 40 40</Value>
+			</Item>
+		</Sprites>
+		<States>
+			<Item>
+				<Key>0</Key>
+				<Value>
+					<Frames>
+						<Item>
+							<Key>0</Key>
+							<Value>
+								<SetSprite>0</SetSprite>
+							</Value>
+						</Item>
+					</Frames>
+					<Length>0</Length>
+					<Input>Nothing</Input>
+					<OnFloor>true</OnFloor>
+					<Priority>0</Priority>
+				</Value>
+			</Item>
+		</States>
+		<StateCats>
+			<Item>
+				<Key>0</Key>
+				<Value>
+					<Item>0</Item>
+				</Value>
+			</Item>
+		</StateCats>
+	</Asset>
+</XnaContent>

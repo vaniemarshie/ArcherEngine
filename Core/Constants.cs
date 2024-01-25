@@ -6,4 +6,6 @@ public static class Constants
 	public const int InternalHeight = 180;
 
 	public const int MaxInputBuffer = 6;
+
+	public const int PaletteCount = 256;
 }
